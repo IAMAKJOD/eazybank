@@ -147,6 +147,10 @@
                 <artifactId>jib-maven-plugin</artifactId>
                 <version>3.5.1</version>
                 <configuration>
+                    <from>
+                        <image>iamakjod/configserver-base:25-jre-curl</image>
+                    </from>
+
                     <to>
                         <image>iamakjod/${project.artifactId}:v1</image>
                     </to>

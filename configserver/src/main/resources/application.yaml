@@ -34,3 +34,8 @@ server:
   port: 8071
 encrypt:
   key: '4bD07*?Jkp#210t6#$GTV'
+logging:
+  level:
+    com:
+      eazybytes:
+        accounts: DEBUG

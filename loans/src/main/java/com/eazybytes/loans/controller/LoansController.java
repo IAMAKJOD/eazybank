@@ -15,6 +15,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -37,7 +39,7 @@ public class LoansController {
 
     private final ILoansService iLoansService;
     private final LoansContactInfoDto loansContactInfoDto;
-
+    private static final Logger logger = LoggerFactory.getLogger(LoansController.class);
     public LoansController(ILoansService iLoansService, LoansContactInfoDto loansContactInfoDto) {
         this.iLoansService = iLoansService;
         this.loansContactInfoDto = loansContactInfoDto;
@@ -75,6 +77,9 @@ public class LoansController {
                 .body(new ResponseDto(LoansConstants.STATUS_201, LoansConstants.MESSAGE_201));
     }
 
+
+
+
     @Operation(
             summary = "Fetch Loan Details REST API",
             description = "REST API to fetch loan details based on a mobile number"
@@ -94,12 +99,18 @@ public class LoansController {
     }
     )
     @GetMapping("/fetch")
-    public ResponseEntity<LoansDto> fetchLoanDetails(@RequestParam
+    public ResponseEntity<LoansDto> fetchLoanDetails(@RequestHeader("eazybank-correlation-id") String correlationId,
+                                                     @RequestParam
                                                                @Pattern(regexp="(^$|[0-9]{10})",message = "Mobile number must be 10 digits")
                                                                String mobileNumber) {
+        logger.debug("eazyBank-correlation-id found: {} ", correlationId);
+
         LoansDto loansDto = iLoansService.fetchLoan(mobileNumber);
         return ResponseEntity.status(HttpStatus.OK).body(loansDto);
     }
+
+
+
 
     @Operation(
             summary = "Update Loan Details REST API",
@@ -136,6 +147,9 @@ public class LoansController {
                     .body(new ResponseDto(LoansConstants.STATUS_417, LoansConstants.MESSAGE_417_UPDATE));
         }
     }
+
+
+
 
     @Operation(
             summary = "Delete Loan Details REST API",
