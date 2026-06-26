@@ -39,3 +39,4 @@ logging:
     com:
       eazybytes:
         accounts: DEBUG
+

@@ -6,8 +6,18 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
 
 @Data
+@JsonPropertyOrder({
+        "name",
+        "email",
+        "mobileNumber",
+        "accountsDto",
+        "loansDto",
+        "cardsDto"
+})
 @Schema(
         name = "CustomerDetails",
         description = "Schema to hold Customer, Account, Cards and Loans information"
